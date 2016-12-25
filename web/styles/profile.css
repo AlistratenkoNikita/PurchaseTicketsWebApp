@@ -1,0 +1,525 @@
+#main {
+    margin: 140px 0 0 505px;
+    height: 800px;
+    width: 1000px;
+    color:black;
+}
+
+#profileArea {
+    float: left;
+    width: 420px;
+    height: 390px;
+    background-color: #ffffff;
+    margin: 5px;
+}
+
+#profileText {
+    margin: 20px 0 0 25px;
+    width: 73px;
+    height: 16px;
+    opacity: 0.5;
+    font-family: "Arial", sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #000000;
+    font-weight: bold;
+}
+
+#change {
+    margin: -10px 0 0 365px;
+    width: 40px;
+    height: 8px;
+    font-family: "Arial", sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.8;
+    text-align: right;
+    color: #006ebd;
+}
+
+#profileImage {
+    position: fixed;
+    margin: 20px 0 0 25px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+#profileName {
+    margin: 35px 0 0 110px;
+    height: 35px;
+    width: 290px;
+    font-family: "Arial", sans-serif;
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    color: #000000;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: solid white 1px;
+    border-radius: 4px;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+#emailText {
+    margin: 40px 0 5px 35px;
+    opacity: 0.5;
+    font-family: "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0px;
+    color: #000000;
+    font-weight: 700;
+}
+
+#email {
+    width: 333px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dbdbdb;
+    margin: 0 0 0 20px;
+    color: #5f5f5f;
+    padding-left: 15px;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+#phoneText {
+    margin: 15px 0 5px 35px;
+    opacity: 0.5;
+    font-family: "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0px;
+    color: #000000;
+    font-weight: 700;
+}
+
+#phone {
+    width: 333px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dbdbdb;
+    margin: 0 0 0 20px;
+    color: #5f5f5f;
+    padding-left: 15px;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+#gorodText {
+    margin: 15px 0 5px 35px;
+    opacity: 0.5;
+    font-family: "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0px;
+    color: #000000;
+    font-weight: 700;
+}
+
+#City {
+    width: 348px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dbdbdb;
+    margin: 0 0 0 20px;
+    color: #5f5f5f;
+    padding-left: 10px;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+#submitChangesButton {
+    display: none;
+    margin: 10px 0 0 20px;
+    float: left;
+    width: 150px;
+    height: 25px;
+    background-color: #fecc03;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    text-transform: uppercase;
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    -ms-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
+
+#submitChangesButton:active {
+    background-color: #ceab1c;
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    -ms-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
+
+#creditCardArea {
+    float: left;
+    width: 420px;
+    height: 310px;
+    background-color: #ffffff;
+    margin: 430px 0 0 -425px;
+}
+
+#bankCartaText {
+    margin: 20px 0 0 25px;
+    height: 16px;
+    opacity: 0.5;
+    font-family: "Arial", sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #000000;
+    font-weight: bold;
+}
+
+#changeForCreditCard {
+    position: fixed;
+    margin: -10px 0 0 365px;
+    border: none;
+    background: white;
+    font-family: "Arial", sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 0.8;
+    letter-spacing: 1px;
+    color: #006ebd;
+}
+
+#ImyaText {
+    margin: 25px 0 5px 35px;
+    opacity: 0.5;
+    font-family: "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0px;
+    color: #000000;
+    font-weight: 700;
+}
+
+#creditCardOwner {
+    width: 333px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dbdbdb;
+    margin: 0 0 0 20px;
+    color: #5f5f5f;
+    padding-left: 15px;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+#nomerBankCart {
+    margin: 20px 0 5px 35px;
+    opacity: 0.5;
+    font-family: "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0px;
+    color: #000000;
+    font-weight: 700;
+}
+
+#creditCardNumber {
+    width: 333px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dbdbdb;
+    margin: 0 0 0 20px;
+    color: #5f5f5f;
+    padding-left: 15px;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+#deictv {
+    margin: 20px 0 5px 35px;
+    opacity: 0.5;
+    font-family: "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0px;
+    color: #000000;
+    font-weight: 700;
+}
+
+#cvvText {
+    margin: -19px 0 5px 245px;
+    opacity: 0.5;
+    font-family: "Arial", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0px;
+    color: #000000;
+    font-weight: 700;
+}
+
+#month {
+    width: 110px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dbdbdb;
+    margin: 0 0 0 20px;
+    color: #5f5f5f;
+    padding-left: 10px;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+#year {
+    width: 65px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dbdbdb;
+    margin: 0 0 0 10px;
+    color: #5f5f5f;
+    padding-left: 5px;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+#CVV {
+    width: 55px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dbdbdb;
+    margin: 0 0 0 25px;
+    color: #5f5f5f;
+    padding-left: 15px;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+
+#submitChangesButton1 {
+    display: none;
+    margin: 10px 0 0 20px;
+    float: left;
+    width: 150px;
+    height: 25px;
+    background-color: #fecc03;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    color: #ffffff;
+    text-transform: uppercase;
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    -ms-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
+
+#submitChangesButton1:active {
+    background-color: #ceab1c;
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    -ms-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
+
+#ticketListUsed{
+    display: none;
+}
+
+#ticketListUsed .ticketCheckbox{
+    visibility: hidden;
+}
+#ticketArea {
+    float: left;
+    width: 400px;
+    height: 736px;
+    background-color: #ffffff;
+    margin: 5px 0 0 80px;
+}
+
+#fuckoffdiv{
+    margin: 40px 0 0 0;
+    width: 100%;
+    border-bottom: solid #d9d9d9 1px;
+}
+
+#boughtText{
+    float: left;
+    margin: -20px 0 0 35px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #575757;
+    background-color: white;
+    border:none;
+}
+
+#usedText{
+    float: left;
+    margin: -20px 0 0 200px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #575757;
+    background-color: white;
+    border: none;
+}
+
+#ticketArea ul{
+    padding: 0;
+    margin: 0 0 0 20px;
+    height: 500px;
+    width: 380px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.ticket{
+    list-style: none;
+    margin: 0;
+    height: 90px;
+    width: 100%;
+}
+
+.galleryArea{
+    height: 100%;
+    width: 30%;
+    display: inline;
+    padding: 0;
+    margin: 0;
+    float: left;
+}
+
+.ticketInfoArea{
+    height: 100%;
+    width: 70%;
+    display: inline;
+    padding: 0;
+    margin: 0;
+    float: left;
+}
+
+.ticketCheckbox{
+    display: inline;
+    width: 19px;
+    height: 19px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: solid 1px #dbdbdb;
+    float: left;
+    margin: 40% 0 0 0;
+}
+
+.ticketPhoto{
+    display: inline;
+    float: left;
+    width: 50px;
+    height: 70px;
+    margin: 15% 0 0 10px;
+}
+
+.ticketNameUse{
+    display: inline-block;
+    font-family: "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 1.2px;
+    text-transform:capitalize;
+    color: #000000;
+    margin: 6.5% 0 0 0;
+}
+
+.ticketDiscriptionUse{
+    display: inline-block;
+    font-family: "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 1.2px;
+    color: #575757;
+    margin: 3.5% 0 0 0;
+}
+
+.ticketName{
+    display: block;
+    font-family: "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 1.2px;
+    color: #000000;
+    margin: 10% 0 0 0;
+}
+
+.ticketDiscription{
+    display: block;
+    font-family: "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 1.2px;
+    color: #575757;
+    margin: 0;
+}
+
+#useButton{
+    display: block;
+    color: white;
+    width: 260px;
+    height: 60px;
+    background-color: #070600;
+    border: none;
+    margin: 70px 0 0 70px;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: 1.1px;
+    text-align: center;
+    color: #ffffff;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+*:disabled {
+    background: white;
+}
