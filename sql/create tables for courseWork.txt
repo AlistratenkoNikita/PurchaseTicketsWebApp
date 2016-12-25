@@ -1,0 +1,100 @@
+---------------------
+--Create Users table
+---------------------
+CREATE TABLE Users
+(
+  user_login char(20) not null,
+  user_password char(32) not null,
+  user_name char(20) not null,
+  user_email char (30) not null,
+  user_phone char (13),
+  user_city char (20),
+  user_status char(20)
+);
+
+-----------------------
+--Create Tickets table
+-----------------------
+CREATE TABLE Tickets
+(
+  ticket_id char(20) not null,
+  ticket_price char(10) not null,
+  ticket_bought_time date not null,
+  ticket_used_time date,
+  ticket_transport char (20) not null
+);
+
+--------------------------
+--Create CreditCard table
+--------------------------
+CREATE TABLE CreditCards
+(
+  cc_number char(16) not null,
+  cc_valid_to_month char(10) not null,
+  cc_valid_to_year char(4) not null,
+  cc_cvv char(3) not null,
+  cc_owner char(20) not null,
+  cc_status char(10) not null
+);
+
+----------------------------
+--Create UsersTickets table
+----------------------------
+CREATE TABLE UsersTickets
+(
+  user_login char(20) not null,
+  ticket_id char(20) not null,
+  cc_number char(16) not null
+);
+
+--------------------------
+--Create UsersCreditCards
+--------------------------
+CREATE TABLE UsersCreditCards
+(
+  user_login char(20) not null,
+  cc_number char(16) not null
+);
+
+----------------------
+-- Define primary keys
+----------------------
+ALTER TABLE USERS ADD CONSTRAINT PK_Users PRIMARY KEY (USER_LOGIN);
+ALTER TABLE TICKETS ADD CONSTRAINT PK_Tickets PRIMARY KEY (TICKET_ID);
+ALTER TABLE CREDITCARDS ADD CONSTRAINT PK_CreditCard PRIMARY KEY (CC_NUMBER);
+ALTER TABLE USERSCREDITCARDS ADD CONSTRAINT PK_UsersCreditCards PRIMARY KEY (USER_LOGIN, CC_NUMBER);
+ALTER TABLE USERSTICKETS ADD CONSTRAINT PK_UsersTICKETS PRIMARY KEY (USER_LOGIN, TICKET_ID, CC_NUMBER);
+
+----------------------
+-- Define foreign keys
+----------------------
+ALTER TABLE USERSCREDITCARDS
+ADD CONSTRAINT FK_Userscreditcards_Users FOREIGN KEY (user_login) REFERENCES users (user_login);
+ALTER TABLE USERSCREDITCARDS
+ADD CONSTRAINT FK_Userscreditcards_Cc FOREIGN KEY (cc_number) REFERENCES CreditCards (cc_number);
+ALTER TABLE USERSTICKETS
+ADD CONSTRAINT FK_USERSTICKETS_Users FOREIGN KEY (user_login) REFERENCES users (user_login);
+ALTER TABLE USERSTICKETS
+ADD CONSTRAINT FK_USERSTICKETS_Tickets FOREIGN KEY (ticket_id) REFERENCES Tickets (ticket_id);
+ALTER TABLE USERSTICKETS
+ADD CONSTRAINT FK_USERSTICKETS_Cc FOREIGN KEY (CC_Number) REFERENCES CreditCards (CC_Number);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

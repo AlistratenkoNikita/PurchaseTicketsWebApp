@@ -1,0 +1,190 @@
+----------------------------
+--Create view UserTickets
+----------------------------
+create view UsTick as 
+(
+  select u.USER_LOGIN user_login, ut.CC_NUMBER creditCardNumber, ut.TICKET_ID ticket_id, 
+  t.TICKET_PRICE ticket_price, t.TICKET_BOUGHT_TIME ticket_bought_time, t.TICKET_USED_TIME ticket_used_time, t.TICKET_TRANSPORT ticket_transport
+  from users u join USERSTICKETS ut on ut.USER_LOGIN = u.USER_LOGIN 
+  join TICKETS t on ut.TICKET_ID = t.TICKET_ID
+);
+
+------------------------------
+--Create view UserCreditCards
+------------------------------
+create view USCR as 
+(
+  select u.USER_LOGIN user_login, c.CC_NUMBER creditCard_number, c.CC_VALID_TO_MONTH, c.CC_VALID_TO_YEAR, c.CC_CVV cvv, c.CC_OWNER, c.CC_STATUS status
+  from users u join USERSCREDITCARDS uc on uc.USER_LOGIN = u.USER_LOGIN 
+  join CREDITCARDS c on uc.CC_NUMBER = c.CC_NUMBER
+);
+
+------------------
+--Create view us
+------------------
+create view us as 
+(
+SELECT 
+    user_login, user_name, user_email, user_phone, user_city
+FROM 
+    users
+);
+
+----------------------------------
+--Create procedure to buytickets
+----------------------------------
+create or replace PROCEDURE buyTickets
+(login in char, amount in int, transport in char, price in char)
+IS
+  lastID char(20);
+  creditcard char(16);
+  i number:=0;
+BEGIN
+   select CREDITCARD_NUMBER into creditcard from Uscr where USER_LOGIN=login and STATUS='active';
+   LOOP
+   i:=i+1;
+   if (i>amount)then exit;
+   end if;
+   select max(ticket_id) into lastID from USTICK;
+   insert into Tickets (ticket_id, ticket_price, ticket_bought_time, ticket_transport) 
+   values (lastID+1, price, TO_DATE(SYSDATE,'DD/MM/YYYY HH24:MI'), transport);
+   insert into userstickets (user_login, ticket_id, cc_number) values (login, lastID+1, creditcard);
+   END LOOP;
+END buyTickets;
+
+--------------------------------------
+--Create procedure to activate ticket
+--------------------------------------
+create or replace PROCEDURE activateTicket
+(user_login_in in char, ticket_transport_in in char)
+IS
+  ticket_id_tmp char(20);
+BEGIN
+   select min(ticket_id) into ticket_id_tmp from USTICK where USER_LOGIN = user_login_in and TICKET_TRANSPORT = ticket_transport_in and TICKET_USED_TIME is null;
+   update TICKETS set TICKET_USED_TIME=SYSDATE where TICKET_ID = ticket_id_tmp;
+END activateTicket;
+
+-----------------------------------
+--Create procedure to edit cc info
+-----------------------------------
+create or replace PROCEDURE editUserCCInfo
+(user_login_in in char, cc_owner_in in char, cc_number_in in char, cc_month_in in char, cc_year_in in char, cc_cvv_in in char, res out char)
+IS
+user_cc_tmp char(16);
+cc_check char(16);
+BEGIN
+  --means everything is ok
+  res:='0';
+  Begin
+    select cc_number into cc_check from CREDITCARDS where cc_number=cc_number_in;
+    --when cc_number exists in table
+    begin
+      select creditcard_number into user_cc_tmp from uscr where user_login=user_login_in and CREDITCARD_NUMBER=cc_number_in;
+      --if entered cc_number belongs to entered_login
+      begin
+        --need to deactivate old users cc
+        select creditcard_number into user_cc_tmp from uscr where user_login=user_login_in and status='active';
+        update creditcards set cc_status='inactive' where cc_number=user_cc_tmp;
+        --update existing cc and activate it
+        update creditcards set cc_valid_to_month=cc_month_in, cc_valid_to_year=cc_year_in,cc_cvv=cc_cvv_in, 
+        cc_owner=cc_owner_in, cc_status='active' where cc_number=cc_number_in;
+      end;
+      exception
+      --means no changes where made
+      when no_data_found then res:='1';
+    end;
+    exception
+    --when cc_number does not exist in table
+    when no_data_found then 
+    begin
+      --need to deactivate old users cc
+      select creditcard_number into user_cc_tmp from uscr where user_login=user_login_in and status='active';
+      update creditcards set cc_status='inactive' where cc_number=user_cc_tmp;
+      --add new cc after deactivating
+      begin
+        insert into creditcards (cc_number, cc_valid_to_month, cc_valid_to_year, cc_cvv, cc_owner, cc_status) values 
+        (cc_number_in, cc_month_in, cc_year_in, cc_cvv_in, cc_owner_in, 'active');
+        insert into userscreditcards (user_login, cc_number) values (user_login_in, cc_number_in);
+      end;
+      exception
+      when no_data_found then
+      --add new cc if no old cc found
+      begin
+        insert into creditcards (cc_number, cc_valid_to_month, cc_valid_to_year, cc_cvv, cc_owner, cc_status) values 
+        (cc_number_in, cc_month_in, cc_year_in, cc_cvv_in, cc_owner_in, 'active');
+        insert into userscreditcards (user_login, cc_number) values (user_login_in, cc_number_in);
+      end;
+    end;
+  End;
+END editUserCCInfo;
+
+--------------------------------------
+--Create procedure to register user
+--------------------------------------
+create or replace PROCEDURE registerUser
+(user_login_in in char, user_name_in in char, user_password_in in char, user_email_in in char, user_phone_in in char, user_city_in in char, res out char)
+IS
+user_login_tmp char(20);
+BEGIN
+  res:='0';
+  begin
+    select user_login into user_login_tmp from users where USER_LOGIN=user_login_in;
+    EXCEPTION
+      when no_data_found then 
+      res:='1';
+      insert into users (user_login, user_password, user_name, user_email, user_phone, user_city) 
+      values (user_login_in, user_password_in, user_name_in, user_email_in, user_phone_in, user_city_in);
+  end;
+END registerUser;
+
+-------------------------------------
+--Create procedure to edit user info
+-------------------------------------
+create or replace PROCEDURE editUserInfo
+(user_login_in in char, user_name_in in char, user_email_in in char, user_phone_in in char, user_city_in in char, res out char)
+IS
+user_phone_tmp char(13);
+user_email_tmp char(30);
+tmp_phone_check char(13);
+tmp_email_check char(30);
+BEGIN
+  res:='0';
+  update USERS set user_name=user_name_in, USER_CITY=user_city_in where USER_LOGIN=user_login_in;
+  select user_phone into user_phone_tmp from US where USER_LOGIN = user_login_in;
+  select user_email into user_email_tmp from US where USER_LOGIN = user_login_in;
+  begin
+    select user_phone into tmp_phone_check from us where user_phone=user_phone_in;
+    if (user_phone_tmp <> tmp_phone_check) then 
+        res:='1';
+    end if;
+    EXCEPTION
+    when no_data_found then
+    update USERS set user_phone=user_phone_in where USER_LOGIN=user_login_in;
+  end;
+  begin
+    select user_email into tmp_email_check from us where user_email=user_email_in;
+    if (tmp_email_check <> user_email_tmp) then 
+        res:='2';
+    end if;
+    EXCEPTION
+    when no_data_found then
+    update USERS set user_email=user_email_in where USER_LOGIN=user_login_in;
+  end;
+END editUserInfo;
+
+---------------------------------
+--Create procedure to login user
+---------------------------------
+create or replace PROCEDURE loginUser
+(user_login_in in char, user_password_in in char, res out char)
+IS
+  tmp char(20);
+BEGIN
+  res:='1';
+  begin
+   select user_login into tmp  from USERS where USER_LOGIN=user_login_in and USER_PASSWORD=user_password_in;
+   EXCEPTION
+    when no_data_found then 
+      res:='0';
+    end;
+END loginUser;
