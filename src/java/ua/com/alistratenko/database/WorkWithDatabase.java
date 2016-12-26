@@ -6,6 +6,7 @@
 package ua.com.alistratenko.database;
 
 import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,6 +28,7 @@ public class WorkWithDatabase {
         String result = null;
         ConnectionFactory.connection.setAutoCommit(false);
         try {
+            ConnectionFactory.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             CallableStatement ct = ConnectionFactory.
                     connection.prepareCall("call loginuser(?,?,?)");
             ct.setString(1, login);
@@ -51,7 +53,6 @@ public class WorkWithDatabase {
     public static ArrayList<String> getUserInfo(String login) 
             throws SQLException {
         ArrayList<String> list = new ArrayList<>();
-        ConnectionFactory.connection.setAutoCommit(false);
         try {
             Statement s = ConnectionFactory.connection.createStatement();
             ResultSet rs = s.executeQuery("select * from "
@@ -73,8 +74,6 @@ public class WorkWithDatabase {
         } catch (SQLException ex) {
             Logger.getLogger(WorkWithDatabase.class.getName()).
                     log(Level.SEVERE, null, ex);
-        } finally {
-            ConnectionFactory.connection.setAutoCommit(true);
         }
         return list;
     }
@@ -87,7 +86,6 @@ public class WorkWithDatabase {
     public static ArrayList<String> getUserCCInfo(String login) 
             throws SQLException {
         ArrayList<String> list = new ArrayList<>();
-        ConnectionFactory.connection.setAutoCommit(false);
         try {
             Statement s = ConnectionFactory.connection.createStatement();
             ResultSet rs = s.executeQuery("select creditcard_number, "
@@ -110,8 +108,6 @@ public class WorkWithDatabase {
         } catch (SQLException ex) {
             Logger.getLogger(WorkWithDatabase.class.getName()).
                     log(Level.SEVERE, null, ex);
-        } finally {
-            ConnectionFactory.connection.setAutoCommit(true);
         }
         return list;
     }
@@ -121,6 +117,7 @@ public class WorkWithDatabase {
             throws SQLException {
         ConnectionFactory.connection.setAutoCommit(false);
         try {
+            ConnectionFactory.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             String result = null;
             CallableStatement ct = ConnectionFactory.connection.
                     prepareCall("call registeruser(?,?,?,?,?,?,?)");
@@ -136,6 +133,7 @@ public class WorkWithDatabase {
             if (result.equals("1")) {
                 return true;
             }
+            ConnectionFactory.connection.commit();
         } catch (SQLException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -149,6 +147,7 @@ public class WorkWithDatabase {
                 throws SQLException {
         ConnectionFactory.connection.setAutoCommit(false);
         try {
+            ConnectionFactory.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             if (bus != null) {
                 if (Integer.valueOf(bus) > 0) {
                     CallableStatement cs = ConnectionFactory.connection.
@@ -193,6 +192,7 @@ public class WorkWithDatabase {
                     cs.execute();
                 }
             }
+            ConnectionFactory.connection.commit();
         } catch (SQLException ex) {
             Logger.getLogger(WorkWithDatabase.class.getName()).
                     log(Level.SEVERE, null, ex);
@@ -203,7 +203,6 @@ public class WorkWithDatabase {
 
     public static String[] getBoughtTickets(String login) throws SQLException {
         String[] list = {"0", "0", "0", "0"};
-        ConnectionFactory.connection.setAutoCommit(false);
         try {
             Statement s = ConnectionFactory.connection.createStatement();
             ResultSet rs = s.executeQuery("select count(ticket_id) "
@@ -237,8 +236,6 @@ public class WorkWithDatabase {
         } catch (SQLException ex) {
             Logger.getLogger(WorkWithDatabase.class.getName()).
                     log(Level.SEVERE, null, ex);
-        } finally {
-            ConnectionFactory.connection.setAutoCommit(true);
         }
         return list;
     }
@@ -246,7 +243,6 @@ public class WorkWithDatabase {
     public static ArrayList<Ticket> getUsedTickets(String login) 
             throws SQLException {
         ArrayList<Ticket> list = new ArrayList<>();
-        ConnectionFactory.connection.setAutoCommit(false);
         try {
             Statement s = ConnectionFactory.connection.createStatement();
             ResultSet rs = s.executeQuery("select ticket_id, "
@@ -262,8 +258,6 @@ public class WorkWithDatabase {
         } catch (SQLException ex) {
             Logger.getLogger(WorkWithDatabase.class.getName()).
                     log(Level.SEVERE, null, ex);
-        } finally {
-            ConnectionFactory.connection.setAutoCommit(true);
         }
         return list;
     }
@@ -273,6 +267,7 @@ public class WorkWithDatabase {
                 throws SQLException {
         ConnectionFactory.connection.setAutoCommit(false);
         try {
+            ConnectionFactory.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             if (metro != null && metro.equals("on")) {
                 CallableStatement cs = ConnectionFactory.connection.
                         prepareCall("call activateTicket(?,?)");
@@ -301,6 +296,7 @@ public class WorkWithDatabase {
                 cs.setString(2, "trolley");
                 cs.execute();
             }
+            ConnectionFactory.connection.commit();
         } catch (SQLException ex) {
             Logger.getLogger(WorkWithDatabase.class.getName()).
                     log(Level.SEVERE, null, ex);
@@ -315,6 +311,7 @@ public class WorkWithDatabase {
                 throws SQLException {
         ConnectionFactory.connection.setAutoCommit(false);
         try {
+            ConnectionFactory.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             String res = null;
             CallableStatement cs = ConnectionFactory.connection.
                     prepareCall("call edituserinfo(?,?,?,?,?,?)");
@@ -325,6 +322,7 @@ public class WorkWithDatabase {
             cs.setString(5, city);
             cs.registerOutParameter(6, Types.CHAR);
             cs.execute();
+            ConnectionFactory.connection.commit();
             return cs.getString(6).trim();
 
         } catch (SQLException ex) {
@@ -341,6 +339,7 @@ public class WorkWithDatabase {
                 throws SQLException {
         ConnectionFactory.connection.setAutoCommit(false);
         try {
+            ConnectionFactory.connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             String res = null;
             CallableStatement cs = ConnectionFactory.connection.
                     prepareCall("call edituserccinfo(?,?,?,?,?,?,?)");
@@ -353,6 +352,7 @@ public class WorkWithDatabase {
             cs.registerOutParameter(7, Types.CHAR);
             cs.execute();
             res = cs.getString(7).trim();
+            ConnectionFactory.connection.commit();
             if (res.equals("0")) {
                 return true;
             }
